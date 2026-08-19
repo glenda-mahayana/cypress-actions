@@ -28,7 +28,6 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: aec31c14-1f2e-4305-90f3-df229ed33e11
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-jobs:
   cypress-e2e-chrome:
     needs: cypress-e2e-electron
     runs-on: ubuntu-latest
@@ -50,7 +49,6 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: aec31c14-1f2e-4305-90f3-df229ed33e11
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  jobs:
   cypress-e2e-firefox:
     needs: cypress-e2e-electron
     runs-on: ubuntu-latest
