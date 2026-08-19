@@ -34,7 +34,7 @@ jobs:
           ci-build-id: ${{ github.run_id }}-${{ github.run_attempt }}
           spec: ${{ github.event.inputs.spec }}
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_RECORD_KEY: aec31c14-1f2e-4305-90f3-df229ed33e11
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
@@ -64,7 +64,7 @@ jobs:
           ci-build-id: ${{ github.run_id }}-${{ github.run_attempt }}
           spec: ${{ github.event.inputs.spec }}
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_RECORD_KEY: aec31c14-1f2e-4305-90f3-df229ed33e11
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
@@ -94,5 +94,5 @@ jobs:
           ci-build-id: ${{ github.run_id }}-${{ github.run_attempt }}
           spec: ${{ github.event.inputs.spec }}
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_RECORD_KEY: aec31c14-1f2e-4305-90f3-df229ed33e11
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
