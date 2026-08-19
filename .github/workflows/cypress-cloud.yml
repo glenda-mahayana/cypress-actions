@@ -1,18 +1,25 @@
 name: Cypress Cloud
 
-on: 
+on:
   workflow_dispatch:
-      inputs:
-        spec: 
-          description: Run by cypress command line
-          default: cypress/e2e/*
+    inputs:
+      spec:
+        description: Run by cypress command line
+        required: false
+        default: cypress/e2e/*
 
 jobs:
+
+  # ============================================================
+  # 1. EXECUTA ELECTRON PRIMEIRO
+  # ============================================================
   cypress-e2e-electron:
     runs-on: ubuntu-latest
+
     container:
       image: cypress/browsers:node18.12.0-chrome103-ff107
       options: --user 1001
+
     steps:
       - name: Get code
         uses: actions/checkout@v3.7.0
@@ -24,16 +31,25 @@ jobs:
           browser: electron
           record: true
           group: UI Electron
+          ci-build-id: ${{ github.run_id }}-${{ github.run_attempt }}
           spec: ${{ github.event.inputs.spec }}
         env:
-          CYPRESS_RECORD_KEY: aec31c14-1f2e-4305-90f3-df229ed33e11
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  # ============================================================
+  # 2. EXECUTA CHROME SOMENTE SE ELECTRON PASSAR
+  # ============================================================
   cypress-e2e-chrome:
     needs: cypress-e2e-electron
+
     runs-on: ubuntu-latest
+
     container:
       image: cypress/browsers:node18.12.0-chrome103-ff107
       options: --user 1001
+
     steps:
       - name: Get code
         uses: actions/checkout@v3.7.0
@@ -45,16 +61,25 @@ jobs:
           browser: chrome
           record: true
           group: UI Chrome
+          ci-build-id: ${{ github.run_id }}-${{ github.run_attempt }}
           spec: ${{ github.event.inputs.spec }}
         env:
-          CYPRESS_RECORD_KEY: aec31c14-1f2e-4305-90f3-df229ed33e11
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  # ============================================================
+  # 3. EXECUTA FIREFOX SOMENTE SE ELECTRON PASSAR
+  # ============================================================
   cypress-e2e-firefox:
     needs: cypress-e2e-electron
+
     runs-on: ubuntu-latest
+
     container:
       image: cypress/browsers:node18.12.0-chrome103-ff107
       options: --user 1001
+
     steps:
       - name: Get code
         uses: actions/checkout@v3.7.0
@@ -66,8 +91,8 @@ jobs:
           browser: firefox
           record: true
           group: UI Firefox
+          ci-build-id: ${{ github.run_id }}-${{ github.run_attempt }}
           spec: ${{ github.event.inputs.spec }}
         env:
-          CYPRESS_RECORD_KEY: aec31c14-1f2e-4305-90f3-df229ed33e11
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
